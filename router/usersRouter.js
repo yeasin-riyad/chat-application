@@ -9,13 +9,17 @@ const mongoose = require('mongoose');
 
 const {getUsers}=require('../controller/usersController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
+const avatarUpload = require('../middlewares/users/avatarUpload');
+const { addUserValidators, addUserValidationHandler } = require('../middlewares/users/userValidators');
 
 // Initialize express app
 const router=express.Router()
 
 // login page
-
 router.get("/",decorateHtmlResponse("Users"),getUsers)
+
+// Add User
+router.post("/",avatarUpload,addUserValidators,addUserValidationHandler)
 
 // router.get('/login',getUsers, (req, res) => {
 //     // res.sendFile(__dirname + '/views/login.html');
