@@ -10,23 +10,39 @@ function notFoundHandler(req,res,next){
 }
 
 //default Error Handler
+// function errorHandler(err,req,res,next){
+//     res.locals.message=err?.message;
+//     res.render('error')
+
+//     //Or,
+//     // res.render('error',{
+//     //     message:err.message,
+//     // })
+
+
+//     // res.status(err.status||500);
+//     // res.json({
+//     //     error:{
+//     //         message:err.message,
+//     //         status:err.status
+//     //     }
+//     // })
+// }
+
 function errorHandler(err,req,res,next){
     res.locals.message=err?.message;
-    res.render('error')
-
-    //Or,
-    // res.render('error',{
-    //     message:err.message,
-    // })
-
-
-    // res.status(err.status||500);
-    // res.json({
-    //     error:{
-    //         message:err.message,
-    //         status:err.status
-    //     }
-    // })
+    res.status(err.status||500);
+    if(res?.locals?.html){
+        res.render('error');
+    }else{
+        res.json({
+            error:{
+                message:err.message,
+                status:err.status
+            }
+        })
+    }
+ 
 }
 
 //exporting the functions

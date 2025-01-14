@@ -8,6 +8,11 @@ const path=require('path');
 // Internal Imports............
 const {notFoundHandler,errorHandler}=require('./middlewares/common/errorHandler')
 
+const loginRouter=require('./router/loginRouter')
+const usersRouter=require('./router/usersRouter')
+const inboxRouter=require('./router/inboxRouter')
+
+
 const app=express()
 dotenv.config()
 
@@ -34,6 +39,10 @@ app.use(express.static(path?.join(__dirname,'public')))
 app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
 
 //routes setup
+app.use('/',loginRouter)
+app.use('/users',usersRouter)
+app.use('/inbox',inboxRouter)
+
 
 //404 not found error handler
 app.use(notFoundHandler)
